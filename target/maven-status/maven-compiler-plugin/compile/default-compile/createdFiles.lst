@@ -1,0 +1,15 @@
+com\canteen\model\OrderStatus.class
+com\canteen\factory\FoodFactory.class
+com\canteen\factory\FoodItem.class
+com\canteen\factory\VegMeals.class
+com\canteen\factory\Tea.class
+com\canteen\factory\FriedRice.class
+com\canteen\observer\Customer.class
+com\canteen\factory\Dosa.class
+com\canteen\observer\Kitchen.class
+com\canteen\factory\Idli.class
+com\canteen\Main.class
+com\canteen\model\Order.class
+com\canteen\observer\OrderObserver.class
+com\canteen\singleton\OrderManager.class
+com\canteen\factory\Coffee.class

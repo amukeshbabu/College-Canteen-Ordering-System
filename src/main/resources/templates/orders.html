@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Current Orders')}"></head>
+<body>
+
+    <nav th:replace="~{fragments :: navbar('orders')}"></nav>
+
+    <div class="main-wrapper">
+
+        <!-- Flash alerts -->
+        <div th:if="${successMsg}" class="alert alert-success">
+            <span th:text="${successMsg}">Success</span>
+        </div>
+        <div th:if="${errorMsg}" class="alert alert-error">
+            <span th:text="${errorMsg}">Error</span>
+        </div>
+
+        <!-- Pattern status header bar -->
+        <div th:replace="~{fragments :: patternBar}"></div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Active Orders Status</h1>
+                <p class="page-subtitle">Track active orders • Customer Observer receives automatic status updates</p>
+            </div>
+            <div>
+                <a th:href="@{/history}" class="btn btn-secondary">📜 View Complete History</a>
+            </div>
+        </div>
+
+        <div class="split-layout">
+            <!-- Active Orders Table -->
+            <div>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Food Item</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                                <th>Current Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="order : ${orders}" th:if="${!orders.empty}">
+                                <td th:text="'#' + ${order.orderId}">#101</td>
+                                <td>
+                                    <strong th:text="${order.foodItem.name}">Fried Rice</strong>
+                                    <div class="pattern-tag" style="margin: 0.2rem 0 0 0; padding: 0.1rem 0.4rem; font-size: 0.65rem;">
+                                        Category: <span th:text="${order.foodItem.category}">Main Course</span>
+                                    </div>
+                                </td>
+                                <td th:text="${order.quantity}">1</td>
+                                <td th:text="'₹' + ${#numbers.formatDecimal(order.totalPrice, 1, 2)}">₹80.00</td>
+                                <td>
+                                    <span class="status-badge" th:classappend="'status-' + ${order.status}" th:text="${order.status}">PLACED</span>
+                                </td>
+                            </tr>
+                            <tr th:if="${orders.empty}">
+                                <td colspan="5" class="empty-state">
+                                    <div class="empty-icon">🎉</div>
+                                    <p>No active orders in progress! Place a new order from the <a th:href="@{/menu}" style="color: var(--accent-orange);">Food Menu</a>.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Customer Observer Notification Log -->
+            <div>
+                <div class="feed-box">
+                    <div class="feed-header">
+                        <span>👤 Customer Observer Live Notifications</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        <strong>Observer Pattern in Action:</strong> Every status update triggers <code>Customer.update()</code> automatically!
+                    </p>
+                    <ul class="notification-list">
+                        <li th:each="note : ${customerNotifications}" class="notification-item" th:text="${note}">Notification item</li>
+                        <li th:if="${customerNotifications.empty}" class="empty-state" style="padding: 1rem; font-size: 0.85rem;">
+                            No customer notifications recorded yet.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer th:replace="~{fragments :: footer}"></footer>
+
+</body>
+</html>

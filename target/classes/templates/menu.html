@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Food Menu')}"></head>
+<body>
+
+    <nav th:replace="~{fragments :: navbar('menu')}"></nav>
+
+    <div class="main-wrapper">
+
+        <!-- Flash alerts -->
+        <div th:if="${successMsg}" class="alert alert-success">
+            <span th:text="${successMsg}">Success</span>
+        </div>
+        <div th:if="${errorMsg}" class="alert alert-error">
+            <span th:text="${errorMsg}">Error</span>
+        </div>
+
+        <!-- Pattern status header bar -->
+        <div th:replace="~{fragments :: patternBar}"></div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Canteen Food Menu</h1>
+                <p class="page-subtitle">Select your delicious items • Powered by <strong>FoodFactory.createFoodItem(...)</strong></p>
+            </div>
+            <div>
+                <a th:href="@{/cart}" class="btn btn-secondary">🛒 View Cart</a>
+            </div>
+        </div>
+
+        <!-- Food Menu Cards Grid -->
+        <div class="card-grid">
+            <div th:each="dto : ${menuItems}" class="food-card">
+                <span class="food-badge" th:text="${dto.item.category}">Tiffin</span>
+                
+                <div>
+                    <h3 class="food-title" th:text="${dto.item.name}">Dosa</h3>
+                    <div class="pattern-tag">
+                        <span>🏭 Factory Class: </span>
+                        <strong th:text="${dto.item.class.simpleName}">Dosa</strong>
+                    </div>
+                </div>
+
+                <div class="food-price" th:text="'₹' + ${#numbers.formatDecimal(dto.item.price, 1, 2)}">₹50.00</div>
+
+                <div>
+                    <!-- Form 1: Add to Cart -->
+                    <form th:action="@{/cart/add}" method="post" class="order-form" style="margin-bottom: 0.5rem;">
+                        <input type="hidden" name="foodChoice" th:value="${dto.choice}">
+                        <input type="number" name="quantity" value="1" min="1" max="50" class="qty-input" required>
+                        <button type="submit" class="btn btn-secondary" style="flex: 1;">🛒 Add to Cart</button>
+                    </form>
+
+                    <!-- Form 2: Quick Place Order -->
+                    <form th:action="@{/order/place-direct}" method="post">
+                        <input type="hidden" name="foodChoice" th:value="${dto.choice}">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="btn btn-primary btn-block">⚡ Quick Order Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer th:replace="~{fragments :: footer}"></footer>
+
+</body>
+</html>

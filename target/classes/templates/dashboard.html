@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Dashboard')}"></head>
+<body>
+
+    <nav th:replace="~{fragments :: navbar('home')}"></nav>
+
+    <div class="main-wrapper">
+
+        <!-- Flash alerts -->
+        <div th:if="${successMsg}" class="alert alert-success">
+            <span th:text="${successMsg}">Success</span>
+        </div>
+        <div th:if="${errorMsg}" class="alert alert-error">
+            <span th:text="${errorMsg}">Error</span>
+        </div>
+
+        <!-- Pattern status header bar -->
+        <div th:replace="~{fragments :: patternBar}"></div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Canteen Dashboard</h1>
+                <p class="page-subtitle">Real-time Order Operations & Pattern Visualizer</p>
+            </div>
+            <div>
+                <form th:action="@{/demo/run}" method="post">
+                    <button type="submit" class="btn btn-primary">⚡ Run Automated Pattern Demo (Viva)</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Metrics Cards -->
+        <div class="pattern-bar" style="margin-bottom: 2rem;">
+            <div class="pattern-card">
+                <div class="pattern-icon factory" style="background: rgba(255, 107, 53, 0.2); color: var(--accent-orange);">📦</div>
+                <div>
+                    <div class="pattern-title">Total Orders Placed</div>
+                    <div class="pattern-detail" style="font-size: 1.5rem;" th:text="${totalOrders}">0</div>
+                </div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-icon observer" style="background: rgba(234, 179, 8, 0.2); color: var(--accent-yellow);">⏳</div>
+                <div>
+                    <div class="pattern-title">Active Orders</div>
+                    <div class="pattern-detail" style="font-size: 1.5rem;" th:text="${activeOrdersCount}">0</div>
+                </div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-icon singleton" style="background: rgba(34, 197, 94, 0.2); color: var(--accent-green);">✅</div>
+                <div>
+                    <div class="pattern-title">Completed Orders</div>
+                    <div class="pattern-detail" style="font-size: 1.5rem;" th:text="${completedOrdersCount}">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="split-layout">
+            <!-- Active Orders Overview -->
+            <div>
+                <h2 style="margin-bottom: 1rem; font-size: 1.4rem;">Recent Orders</h2>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Item</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="order : ${orders}" th:if="${!orders.empty}">
+                                <td th:text="'#' + ${order.orderId}">#101</td>
+                                <td>
+                                    <strong th:text="${order.foodItem.name}">Idli</strong>
+                                    <div class="pattern-tag" style="margin: 0.2rem 0 0 0; padding: 0.1rem 0.4rem; font-size: 0.65rem;">
+                                        Factory: <span th:text="${order.foodItem.class.simpleName}">Idli</span>
+                                    </div>
+                                </td>
+                                <td th:text="${order.quantity}">2</td>
+                                <td th:text="'₹' + ${#numbers.formatDecimal(order.totalPrice, 1, 2)}">₹60.00</td>
+                                <td>
+                                    <span class="status-badge" th:classappend="'status-' + ${order.status}" th:text="${order.status}">PLACED</span>
+                                </td>
+                            </tr>
+                            <tr th:if="${orders.empty}">
+                                <td colspan="5" class="empty-state">
+                                    <div class="empty-icon">🍽️</div>
+                                    <p>No orders placed yet. Go to <a th:href="@{/menu}" style="color: var(--accent-orange);">Food Menu</a> to place your first order!</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Live Observer Notifications Stream -->
+            <div>
+                <h2 style="margin-bottom: 1rem; font-size: 1.4rem;">Observer Event Stream</h2>
+                <div class="feed-box" style="margin-bottom: 1.5rem;">
+                    <div class="feed-header">
+                        <span>👤 Customer Observers</span>
+                    </div>
+                    <ul class="notification-list">
+                        <li th:each="note : ${customerNotifications}" class="notification-item" th:text="${note}">Notification item</li>
+                        <li th:if="${customerNotifications.empty}" class="empty-state" style="padding: 1rem; font-size: 0.85rem;">
+                            No customer notifications triggered yet.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="feed-box">
+                    <div class="feed-header">
+                        <span>👨‍🍳 Kitchen Observers</span>
+                    </div>
+                    <ul class="notification-list">
+                        <li th:each="note : ${kitchenNotifications}" class="notification-item kitchen" th:text="${note}">Notification item</li>
+                        <li th:if="${kitchenNotifications.empty}" class="empty-state" style="padding: 1rem; font-size: 0.85rem;">
+                            No kitchen notifications triggered yet.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer th:replace="~{fragments :: footer}"></footer>
+
+</body>
+</html>

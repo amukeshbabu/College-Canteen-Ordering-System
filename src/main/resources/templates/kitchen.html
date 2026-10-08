@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Kitchen Dashboard')}"></head>
+<body>
+
+    <nav th:replace="~{fragments :: navbar('kitchen')}"></nav>
+
+    <div class="main-wrapper">
+
+        <!-- Flash alerts -->
+        <div th:if="${successMsg}" class="alert alert-success">
+            <span th:text="${successMsg}">Success</span>
+        </div>
+        <div th:if="${errorMsg}" class="alert alert-error">
+            <span th:text="${errorMsg}">Error</span>
+        </div>
+
+        <!-- Pattern status header bar -->
+        <div th:replace="~{fragments :: patternBar}"></div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">👨‍🍳 Kitchen Staff Control Center</h1>
+                <p class="page-subtitle">Update order status: <strong>PLACED → PREPARING → READY → COMPLETED</strong> (Triggers Observer Pattern)</p>
+            </div>
+            <div>
+                <a th:href="@{/orders}" class="btn btn-secondary">👀 View Customer Status Page</a>
+            </div>
+        </div>
+
+        <div class="split-layout">
+            <!-- Kitchen Action Dashboard -->
+            <div>
+                <h2 style="margin-bottom: 1rem; font-size: 1.4rem;">Orders Requiring Preparation / Fulfillment</h2>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Food Item</th>
+                                <th>Qty</th>
+                                <th>Current Status</th>
+                                <th>Update Order Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="order : ${orders}" th:if="${!orders.empty}">
+                                <td th:text="'#' + ${order.orderId}">#101</td>
+                                <td>
+                                    <strong th:text="${order.foodItem.name}">Dosa</strong>
+                                    <div style="font-size: 0.8rem; color: var(--text-muted);" th:text="${order.foodItem.category}">Tiffin</div>
+                                </td>
+                                <td style="font-weight: 700;" th:text="${order.quantity}">2</td>
+                                <td>
+                                    <span class="status-badge" th:classappend="'status-' + ${order.status}" th:text="${order.status}">PLACED</span>
+                                </td>
+                                <td>
+                                    <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                                        <!-- Step 1: Transition to PREPARING -->
+                                        <form th:if="${order.status == T(com.canteen.model.OrderStatus).PLACED}" th:action="@{/kitchen/update-status}" method="post">
+                                            <input type="hidden" name="orderId" th:value="${order.orderId}">
+                                            <input type="hidden" name="newStatus" value="PREPARING">
+                                            <button type="submit" class="btn btn-warning" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+                                                ⚙️ Start Preparing
+                                            </button>
+                                        </form>
+
+                                        <!-- Step 2: Transition to READY -->
+                                        <form th:if="${order.status == T(com.canteen.model.OrderStatus).PREPARING}" th:action="@{/kitchen/update-status}" method="post">
+                                            <input type="hidden" name="orderId" th:value="${order.orderId}">
+                                            <input type="hidden" name="newStatus" value="READY">
+                                            <button type="submit" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-color: var(--accent-purple); color: #c084fc;">
+                                                🔔 Mark Ready
+                                            </button>
+                                        </form>
+
+                                        <!-- Step 3: Transition to COMPLETED -->
+                                        <form th:if="${order.status == T(com.canteen.model.OrderStatus).READY}" th:action="@{/kitchen/update-status}" method="post">
+                                            <input type="hidden" name="orderId" th:value="${order.orderId}">
+                                            <input type="hidden" name="newStatus" value="COMPLETED">
+                                            <button type="submit" class="btn btn-success" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+                                                ✅ Complete & Deliver
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:if="${orders.empty}">
+                                <td colspan="5" class="empty-state">
+                                    <div class="empty-icon">👨‍🍳</div>
+                                    <p>Kitchen queue is clean! All active orders have been prepared and completed.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Kitchen Observer Notifications Feed -->
+            <div>
+                <div class="feed-box">
+                    <div class="feed-header">
+                        <span>👨‍🍳 Kitchen Observer Dispatched Logs</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        <strong>Observer Pattern:</strong> <code>Kitchen.update(...)</code> receives automated status change notifications!
+                    </p>
+                    <ul class="notification-list">
+                        <li th:each="note : ${kitchenNotifications}" class="notification-item kitchen" th:text="${note}">Kitchen Notification</li>
+                        <li th:if="${kitchenNotifications.empty}" class="empty-state" style="padding: 1rem; font-size: 0.85rem;">
+                            No kitchen notifications logged yet.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer th:replace="~{fragments :: footer}"></footer>
+
+</body>
+</html>
