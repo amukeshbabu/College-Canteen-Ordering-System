@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" fill="none">
+  <rect width="40" height="40" rx="10" fill="#D9532F"/>
+  <!-- Elegant bowl & aroma steam vector -->
+  <path d="M10 23C10 27.4183 13.5817 31 18 31H22C26.4183 31 30 27.4183 30 23H10Z" fill="white"/>
+  <rect x="14" y="32" width="12" height="2" rx="1" fill="white" opacity="0.9"/>
+  <!-- Steam swirls -->
+  <path d="M15 13C14 15 16 17 15 19" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M20 10C19 13 21 15 20 19" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M25 13C24 15 26 17 25 19" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+</svg>

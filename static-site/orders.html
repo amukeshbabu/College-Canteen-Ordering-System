@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Active Orders & Live Tracking — JeevaCan Campus Dining</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+</head>
+<body>
+
+  <!-- Global Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="index.html" class="brand" aria-label="JeevaCan Home">
+        <div class="brand-logo-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+            <line x1="6" y1="1" x2="6" y2="4"></line>
+            <line x1="10" y1="1" x2="10" y2="4"></line>
+            <line x1="14" y1="1" x2="14" y2="4"></line>
+          </svg>
+        </div>
+        <div class="brand-meta">
+          <span class="brand-name">JeevaCan</span>
+          <span class="brand-badge">Campus Dining</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="menu.html" class="nav-link">Menu</a></li>
+        <li><a href="orders.html" class="nav-link active">Orders</a></li>
+        <li><a href="history.html" class="nav-link">History</a></li>
+        <li><a href="kitchen.html" class="nav-link nav-link-kitchen">Kitchen View</a></li>
+      </ul>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <a href="cart.html" class="cart-button" aria-label="View Shopping Cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="21" r="1"></circle>
+            <circle cx="19" cy="21" r="1"></circle>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+          </svg>
+          <span class="cart-count-badge" style="display: none;">0</span>
+        </a>
+
+        <button class="mobile-nav-toggle" aria-label="Toggle navigation menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-drawer">
+    <ul class="nav-menu">
+      <li><a href="index.html" class="nav-link">Home Dashboard</a></li>
+      <li><a href="menu.html" class="nav-link">Food Menu</a></li>
+      <li><a href="cart.html" class="nav-link">Shopping Cart</a></li>
+      <li><a href="orders.html" class="nav-link active">Active Orders</a></li>
+      <li><a href="history.html" class="nav-link">Order History</a></li>
+      <li><a href="kitchen.html" class="nav-link nav-link-kitchen">Kitchen Operational View</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <main class="site-main">
+    <div class="container">
+
+      <!-- Page Header -->
+      <header class="page-header">
+        <div class="page-title-group">
+          <h1 class="page-title">Active Orders Status</h1>
+          <p class="page-subtitle">Track real-time preparation status • <strong>Customer Observer</strong> receives automated status callbacks</p>
+        </div>
+        <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="menu.html" class="btn btn-secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Place Another Order
+          </a>
+          <a href="kitchen.html" class="btn btn-warning">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/></svg>
+            Open Kitchen View
+          </a>
+        </div>
+      </header>
+
+      <!-- Layout Split: Left (Active Order Cards), Right (Customer Observer Feed) -->
+      <div class="layout-split">
+
+        <!-- Active Orders Column -->
+        <div id="active-orders-column">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Customer Observer Feed Column -->
+        <div>
+          <div class="observer-feed">
+            <div class="feed-header">
+              <span class="feed-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: #2563EB;">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+                Customer Observer Stream
+              </span>
+              <span class="status-pill PLACED" style="font-size: 0.68rem;">Live Events</span>
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: var(--space-4); line-height: 1.45;">
+              <strong>Design Pattern in Action:</strong> Order status changes trigger <code>Customer.update()</code> automatically without tight coupling!
+            </p>
+
+            <div class="feed-list" id="customer-observer-feed">
+              <!-- Logs populated by JS -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand-wrap">
+          <span class="footer-brand-title">JeevaCan • College Canteen Ordering System</span>
+          <p class="footer-desc">A premium, resilient food ordering architecture demonstrating Singleton, Factory, and Observer software design patterns with zero external backend dependencies.</p>
+        </div>
+        <ul class="footer-links">
+          <li><a href="index.html" class="footer-link">Dashboard</a></li>
+          <li><a href="menu.html" class="footer-link">Menu Catalog</a></li>
+          <li><a href="orders.html" class="footer-link">Live Tracker</a></li>
+          <li><a href="kitchen.html" class="footer-link">Kitchen Terminal</a></li>
+          <li><a href="history.html" class="footer-link">Audit History</a></li>
+        </ul>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 JeevaCan. All rights reserved. Built with HTML5, CSS3 & Vanilla JavaScript.</span>
+        <div>
+          <button class="btn btn-ghost btn-sm btn-reset-data" type="button" style="font-size: 0.75rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 13px; height: 13px; vertical-align: -2px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Reset Demo Data
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    function renderActiveOrdersPage() {
+      const orders = App.getOrders();
+      const activeOrders = orders.filter(o => o.status !== "COMPLETED");
+      const leftCol = document.getElementById("active-orders-column");
+
+      if (activeOrders.length === 0) {
+        leftCol.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h2 class="empty-state-title">No Active Orders In Progress</h2>
+            <p class="empty-state-desc">All placed orders have been fulfilled and marked COMPLETED. Place a new order from our delicious menu or explore the full audit history.</p>
+            <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+              <a href="menu.html" class="btn btn-primary">Browse Menu Catalog</a>
+              <a href="history.html" class="btn btn-secondary">View Order History</a>
+            </div>
+          </div>
+        `;
+      } else {
+        leftCol.innerHTML = activeOrders.map(order => `
+          <div class="order-card">
+            <div class="order-card-header">
+              <div>
+                <span class="order-id-badge">Order #${order.orderId}</span>
+                <div class="order-time-text">Placed ${App.timeAgo(order.placedAt)} • <strong>${order.customerName}</strong></div>
+              </div>
+              <div>
+                ${App.renderStatusBadge(order.status)}
+              </div>
+            </div>
+
+            <!-- Visual 4-Step Progress Track -->
+            ${App.renderOrderProgress(order.status)}
+
+            <!-- Items Breakdown Table -->
+            <table class="order-items-table">
+              <tbody>
+                ${order.items.map(it => `
+                  <tr>
+                    <td class="order-item-qty">${it.quantity}x</td>
+                    <td class="order-item-name">
+                      <strong>${it.name}</strong>
+                      <span class="food-factory-tag" style="margin-left: 6px;">${it.category}</span>
+                    </td>
+                    <td class="order-item-price">${App.formatINR(it.price * it.quantity)}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+
+            <div class="order-card-footer">
+              <div>
+                <span style="font-size: 0.78rem; color: var(--text-tertiary);">Status Note: </span>
+                <span style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);">
+                  ${order.status === 'PLACED' ? 'Waiting for kitchen acceptance' :
+                    order.status === 'PREPARING' ? 'Chef is cooking your order' :
+                    order.status === 'READY' ? 'Ready for counter pickup!' : 'Order fulfilled'}
+                </span>
+              </div>
+              <div class="order-total-sum">Total: ${App.formatINR(order.totalPrice)}</div>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      // Render Customer Observer Logs Feed
+      const feedContainer = document.getElementById("customer-observer-feed");
+      const logs = App.getNotificationLogs();
+      const customerLogs = logs.filter(l => l.type === "customer" || l.text.includes("Customer") || l.text.includes("VIVA"));
+
+      if (customerLogs.length === 0) {
+        feedContainer.innerHTML = `
+          <div style="padding: var(--space-4); text-align: center; color: var(--text-tertiary); font-size: 0.85rem;">
+            No customer observer notifications recorded yet.
+          </div>
+        `;
+      } else {
+        feedContainer.innerHTML = customerLogs.map(log => `
+          <div class="feed-item customer">
+            <div style="flex-shrink: 0; margin-top: 2px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 15px; height: 15px; color: #2563EB;">
+                <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div>
+              <div>${log.text}</div>
+              <div class="feed-timestamp">${App.timeAgo(log.time)}</div>
+            </div>
+          </div>
+        `).join("");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderActiveOrdersPage();
+      window.addEventListener("jeevacan:data-updated", renderActiveOrdersPage);
+    });
+  </script>
+</body>
+</html>

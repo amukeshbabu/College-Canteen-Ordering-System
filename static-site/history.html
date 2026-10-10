@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Order History — JeevaCan Campus Dining</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+</head>
+<body>
+
+  <!-- Global Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="index.html" class="brand" aria-label="JeevaCan Home">
+        <div class="brand-logo-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+            <line x1="6" y1="1" x2="6" y2="4"></line>
+            <line x1="10" y1="1" x2="10" y2="4"></line>
+            <line x1="14" y1="1" x2="14" y2="4"></line>
+          </svg>
+        </div>
+        <div class="brand-meta">
+          <span class="brand-name">JeevaCan</span>
+          <span class="brand-badge">Campus Dining</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="menu.html" class="nav-link">Menu</a></li>
+        <li><a href="orders.html" class="nav-link">Orders</a></li>
+        <li><a href="history.html" class="nav-link active">History</a></li>
+        <li><a href="kitchen.html" class="nav-link nav-link-kitchen">Kitchen View</a></li>
+      </ul>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <a href="cart.html" class="cart-button" aria-label="View Shopping Cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="21" r="1"></circle>
+            <circle cx="19" cy="21" r="1"></circle>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+          </svg>
+          <span class="cart-count-badge" style="display: none;">0</span>
+        </a>
+
+        <button class="mobile-nav-toggle" aria-label="Toggle navigation menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-drawer">
+    <ul class="nav-menu">
+      <li><a href="index.html" class="nav-link">Home Dashboard</a></li>
+      <li><a href="menu.html" class="nav-link">Food Menu</a></li>
+      <li><a href="cart.html" class="nav-link">Shopping Cart</a></li>
+      <li><a href="orders.html" class="nav-link">Active Orders</a></li>
+      <li><a href="history.html" class="nav-link active">Order History</a></li>
+      <li><a href="kitchen.html" class="nav-link nav-link-kitchen">Kitchen Operational View</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <main class="site-main">
+    <div class="container">
+
+      <!-- Page Header -->
+      <header class="page-header">
+        <div class="page-title-group">
+          <h1 class="page-title">Complete Order History</h1>
+          <p class="page-subtitle">Centralized audit trail • Managed consistently by the Singleton instance <strong>OrderManager</strong></p>
+        </div>
+        <div style="display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap;">
+          <a href="menu.html" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Food Order
+          </a>
+          <button class="btn btn-secondary btn-reset-data" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Reset Seed Data
+          </button>
+        </div>
+      </header>
+
+      <!-- History Summary Metrics -->
+      <section class="metrics-row" style="margin-bottom: var(--space-6);">
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-label">Total Revenue Audited</span>
+            <span class="stat-value" id="history-total-revenue">₹0.00</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-label">Cumulative Orders</span>
+            <span class="stat-value" id="history-total-orders">0</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-label">Completed Orders</span>
+            <span class="stat-value" id="history-completed-count">0</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon amber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="stat-details">
+            <span class="stat-label">Average Order Size</span>
+            <span class="stat-value" id="history-avg-value">₹0.00</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- History Table Container -->
+      <section id="history-table-container">
+        <!-- Rendered by JS -->
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand-wrap">
+          <span class="footer-brand-title">JeevaCan • College Canteen Ordering System</span>
+          <p class="footer-desc">A premium, resilient food ordering architecture demonstrating Singleton, Factory, and Observer software design patterns with zero external backend dependencies.</p>
+        </div>
+        <ul class="footer-links">
+          <li><a href="index.html" class="footer-link">Dashboard</a></li>
+          <li><a href="menu.html" class="footer-link">Menu Catalog</a></li>
+          <li><a href="orders.html" class="footer-link">Live Tracker</a></li>
+          <li><a href="kitchen.html" class="footer-link">Kitchen Terminal</a></li>
+          <li><a href="history.html" class="footer-link">Audit History</a></li>
+        </ul>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 JeevaCan. All rights reserved. Built with HTML5, CSS3 & Vanilla JavaScript.</span>
+        <div>
+          <button class="btn btn-ghost btn-sm btn-reset-data" type="button" style="font-size: 0.75rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 13px; height: 13px; vertical-align: -2px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Reset Demo Data
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    function renderHistoryPage() {
+      const orders = App.getOrders();
+      const container = document.getElementById("history-table-container");
+
+      const totalRevenue = orders.reduce((sum, o) => sum + (o.totalPrice || 0), 0);
+      const completedCount = orders.filter(o => o.status === "COMPLETED").length;
+      const avgOrder = orders.length > 0 ? (totalRevenue / orders.length) : 0;
+
+      document.getElementById("history-total-revenue").textContent = App.formatINR(totalRevenue);
+      document.getElementById("history-total-orders").textContent = orders.length;
+      document.getElementById("history-completed-count").textContent = completedCount;
+      document.getElementById("history-avg-value").textContent = App.formatINR(avgOrder);
+
+      if (orders.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h2 class="empty-state-title">No Orders in History</h2>
+            <p class="empty-state-desc">Your order registry is currently empty. Explore the menu and place your first food order.</p>
+            <a href="menu.html" class="btn btn-primary">Browse Menu Catalog</a>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer & Roll No</th>
+                <th>Items Ordered</th>
+                <th>Time Placed</th>
+                <th>Total Paid</th>
+                <th>Final Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${orders.map(order => `
+                <tr>
+                  <td>
+                    <strong style="color: var(--text-primary);">#${order.orderId}</strong>
+                  </td>
+                  <td>
+                    <div style="font-weight: 600; color: var(--text-primary);">${order.customerName}</div>
+                    <div style="font-size: 0.76rem; color: var(--text-tertiary);">${order.customerPhone || 'Counter Guest'}</div>
+                  </td>
+                  <td>
+                    <div style="display: flex; flex-direction: column; gap: 3px;">
+                      ${order.items.map(it => `
+                        <div style="font-size: 0.85rem;">
+                          <span style="font-weight: 700; color: var(--accent-primary);">${it.quantity}x</span>
+                          ${it.name}
+                          <span class="food-factory-tag" style="margin-left: 4px; font-size: 0.68rem;">${it.category}</span>
+                        </div>
+                      `).join("")}
+                    </div>
+                  </td>
+                  <td>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);">${new Date(order.placedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                    <div style="font-size: 0.74rem; color: var(--text-tertiary);">${new Date(order.placedAt).toLocaleDateString()}</div>
+                  </td>
+                  <td style="font-weight: 800; color: var(--text-primary); font-size: 0.95rem;">
+                    ${App.formatINR(order.totalPrice)}
+                  </td>
+                  <td>
+                    ${App.renderStatusBadge(order.status)}
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderHistoryPage();
+      window.addEventListener("jeevacan:data-updated", renderHistoryPage);
+    });
+  </script>
+</body>
+</html>

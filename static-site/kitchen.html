@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kitchen Staff Terminal — JeevaCan Campus Dining</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+</head>
+<body>
+
+  <!-- Global Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="index.html" class="brand" aria-label="JeevaCan Home">
+        <div class="brand-logo-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+            <line x1="6" y1="1" x2="6" y2="4"></line>
+            <line x1="10" y1="1" x2="10" y2="4"></line>
+            <line x1="14" y1="1" x2="14" y2="4"></line>
+          </svg>
+        </div>
+        <div class="brand-meta">
+          <span class="brand-name">JeevaCan</span>
+          <span class="brand-badge">Campus Dining</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="menu.html" class="nav-link">Menu</a></li>
+        <li><a href="orders.html" class="nav-link">Orders</a></li>
+        <li><a href="history.html" class="nav-link">History</a></li>
+        <li><a href="kitchen.html" class="nav-link nav-link-kitchen active">Kitchen View</a></li>
+      </ul>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <a href="cart.html" class="cart-button" aria-label="View Shopping Cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="21" r="1"></circle>
+            <circle cx="19" cy="21" r="1"></circle>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+          </svg>
+          <span class="cart-count-badge" style="display: none;">0</span>
+        </a>
+
+        <button class="mobile-nav-toggle" aria-label="Toggle navigation menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-drawer">
+    <ul class="nav-menu">
+      <li><a href="index.html" class="nav-link">Home Dashboard</a></li>
+      <li><a href="menu.html" class="nav-link">Food Menu</a></li>
+      <li><a href="cart.html" class="nav-link">Shopping Cart</a></li>
+      <li><a href="orders.html" class="nav-link">Active Orders</a></li>
+      <li><a href="history.html" class="nav-link">Order History</a></li>
+      <li><a href="kitchen.html" class="nav-link nav-link-kitchen active">Kitchen Operational View</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <main class="site-main">
+    <div class="container">
+
+      <!-- Page Header -->
+      <header class="page-header">
+        <div class="page-title-group">
+          <h1 class="page-title">Kitchen Operational Terminal</h1>
+          <p class="page-subtitle">Order lifecycle transitions: <strong>PLACED → PREPARING → READY → COMPLETED</strong> (Dispatches <code>Kitchen.update()</code> Observer)</p>
+        </div>
+        <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="orders.html" class="btn btn-secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            Customer Status View
+          </a>
+          <button class="btn btn-primary btn-run-viva-demo" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Run Viva Simulation
+          </button>
+        </div>
+      </header>
+
+      <!-- Kitchen Split Layout: Left (Live Kitchen Tickets), Right (Kitchen Observer Dispatched Logs) -->
+      <div class="layout-kitchen-split">
+
+        <!-- Active Kitchen Queue Column -->
+        <div>
+          <div class="section-header" style="margin-bottom: var(--space-4);">
+            <div>
+              <h2 class="section-title">Preparation & Fulfillment Queue</h2>
+              <p class="section-subtitle">Real-time orders awaiting prep or pickup</p>
+            </div>
+            <span id="kitchen-queue-count-badge" class="status-pill PREPARING" style="font-size: 0.8rem;">0 Tickets Active</span>
+          </div>
+
+          <div id="kitchen-orders-table-wrap">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Kitchen Observer Feed Column -->
+        <div>
+          <div class="observer-feed">
+            <div class="feed-header">
+              <span class="feed-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: #D97706;">
+                  <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
+                  <line x1="6" y1="17" x2="18" y2="17"/>
+                </svg>
+                Kitchen Observer Telemetry
+              </span>
+              <span class="status-pill PREPARING" style="font-size: 0.68rem;">Live Stream</span>
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: var(--space-4); line-height: 1.45;">
+              <strong>Observer Architecture:</strong> When the kitchen staff updates an order, <code>Order.notifyObservers()</code> instantly notifies this telemetry log.
+            </p>
+
+            <div class="feed-list" id="kitchen-observer-feed">
+              <!-- Logs populated by JS -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand-wrap">
+          <span class="footer-brand-title">JeevaCan • College Canteen Ordering System</span>
+          <p class="footer-desc">A premium, resilient food ordering architecture demonstrating Singleton, Factory, and Observer software design patterns with zero external backend dependencies.</p>
+        </div>
+        <ul class="footer-links">
+          <li><a href="index.html" class="footer-link">Dashboard</a></li>
+          <li><a href="menu.html" class="footer-link">Menu Catalog</a></li>
+          <li><a href="orders.html" class="footer-link">Live Tracker</a></li>
+          <li><a href="kitchen.html" class="footer-link">Kitchen Terminal</a></li>
+          <li><a href="history.html" class="footer-link">Audit History</a></li>
+        </ul>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 JeevaCan. All rights reserved. Built with HTML5, CSS3 & Vanilla JavaScript.</span>
+        <div>
+          <button class="btn btn-ghost btn-sm btn-reset-data" type="button" style="font-size: 0.75rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 13px; height: 13px; vertical-align: -2px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Reset Demo Data
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    function renderKitchenPage() {
+      const orders = App.getOrders();
+      const activeKitchenOrders = orders.filter(o => o.status !== "COMPLETED");
+      const tableWrap = document.getElementById("kitchen-orders-table-wrap");
+      const countBadge = document.getElementById("kitchen-queue-count-badge");
+
+      countBadge.textContent = `${activeKitchenOrders.length} Tickets Active`;
+
+      if (activeKitchenOrders.length === 0) {
+        tableWrap.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3 class="empty-state-title">Kitchen Queue is Completely Clear!</h3>
+            <p class="empty-state-desc">All pending student food orders have been successfully prepared and handed over at the counter.</p>
+            <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+              <button class="btn btn-primary btn-run-viva-demo" type="button">Trigger Viva Pattern Demo</button>
+              <a href="history.html" class="btn btn-secondary">Review Completed History</a>
+            </div>
+          </div>
+        `;
+      } else {
+        tableWrap.innerHTML = `
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Order Ticket</th>
+                  <th>Customer Info</th>
+                  <th>Items to Cook</th>
+                  <th>Current State</th>
+                  <th style="text-align: right;">Kitchen Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${activeKitchenOrders.map(order => `
+                  <tr>
+                    <td>
+                      <strong style="font-size: 1rem; color: var(--text-primary);">#${order.orderId}</strong>
+                      <div style="font-size: 0.75rem; color: var(--text-tertiary); font-family: var(--font-mono);">${App.timeAgo(order.placedAt)}</div>
+                    </td>
+                    <td>
+                      <div style="font-weight: 600; color: var(--text-primary);">${order.customerName}</div>
+                      ${order.notes && order.notes !== 'None' ? `<div style="font-size: 0.75rem; color: #D97706;">Note: "${order.notes}"</div>` : ''}
+                    </td>
+                    <td>
+                      <div style="display: flex; flex-direction: column; gap: 4px;">
+                        ${order.items.map(it => `
+                          <div style="font-size: 0.86rem;">
+                            <span style="font-weight: 700; color: var(--accent-primary);">${it.quantity}x</span>
+                            ${it.name}
+                            <span class="food-factory-tag" style="margin-left: 4px; font-size: 0.68rem;">${it.category}</span>
+                          </div>
+                        `).join("")}
+                      </div>
+                    </td>
+                    <td>
+                      ${App.renderStatusBadge(order.status)}
+                    </td>
+                    <td style="text-align: right;">
+                      <div style="display: inline-flex; gap: var(--space-2); justify-content: flex-end;">
+                        ${order.status === 'PLACED' ? `
+                          <button class="btn btn-warning btn-sm btn-update-status" data-id="${order.orderId}" data-status="PREPARING" type="button">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                            Start Preparing
+                          </button>
+                        ` : ''}
+
+                        ${order.status === 'PREPARING' ? `
+                          <button class="btn btn-secondary btn-sm btn-update-status" data-id="${order.orderId}" data-status="READY" type="button" style="border-color: #C084FC; color: #7E22CE; background-color: #FAF5FF;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                            Mark Ready
+                          </button>
+                        ` : ''}
+
+                        ${order.status === 'READY' ? `
+                          <button class="btn btn-success btn-sm btn-update-status" data-id="${order.orderId}" data-status="COMPLETED" type="button">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;"><polyline points="20 6 9 17 4 12"/></svg>
+                            Complete & Deliver
+                          </button>
+                        ` : ''}
+                      </div>
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
+
+        // Bind transition buttons
+        tableWrap.querySelectorAll(".btn-update-status").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const orderId = btn.dataset.id;
+            const newStatus = btn.dataset.status;
+            App.updateOrderStatus(orderId, newStatus);
+            renderKitchenPage();
+          });
+        });
+      }
+
+      // Render Kitchen Observer Logs Feed
+      const feedContainer = document.getElementById("kitchen-observer-feed");
+      const logs = App.getNotificationLogs();
+      const kitchenLogs = logs.filter(l => l.type === "kitchen" || l.text.includes("Kitchen") || l.text.includes("VIVA"));
+
+      if (kitchenLogs.length === 0) {
+        feedContainer.innerHTML = `
+          <div style="padding: var(--space-4); text-align: center; color: var(--text-tertiary); font-size: 0.85rem;">
+            No kitchen observer notifications logged yet.
+          </div>
+        `;
+      } else {
+        feedContainer.innerHTML = kitchenLogs.map(log => `
+          <div class="feed-item kitchen">
+            <div style="flex-shrink: 0; margin-top: 2px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 15px; height: 15px; color: #D97706;">
+                <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
+              </svg>
+            </div>
+            <div>
+              <div>${log.text}</div>
+              <div class="feed-timestamp">${App.timeAgo(log.time)}</div>
+            </div>
+          </div>
+        `).join("");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderKitchenPage();
+      window.addEventListener("jeevacan:data-updated", renderKitchenPage);
+    });
+  </script>
+</body>
+</html>

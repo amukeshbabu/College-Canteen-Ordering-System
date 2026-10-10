@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart & Checkout — JeevaCan Campus Dining</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+</head>
+<body>
+
+  <!-- Global Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="index.html" class="brand" aria-label="JeevaCan Home">
+        <div class="brand-logo-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+            <line x1="6" y1="1" x2="6" y2="4"></line>
+            <line x1="10" y1="1" x2="10" y2="4"></line>
+            <line x1="14" y1="1" x2="14" y2="4"></line>
+          </svg>
+        </div>
+        <div class="brand-meta">
+          <span class="brand-name">JeevaCan</span>
+          <span class="brand-badge">Campus Dining</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="menu.html" class="nav-link">Menu</a></li>
+        <li><a href="orders.html" class="nav-link">Orders</a></li>
+        <li><a href="history.html" class="nav-link">History</a></li>
+        <li><a href="kitchen.html" class="nav-link nav-link-kitchen">Kitchen View</a></li>
+      </ul>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <a href="cart.html" class="cart-button" aria-label="View Shopping Cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="21" r="1"></circle>
+            <circle cx="19" cy="21" r="1"></circle>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+          </svg>
+          <span class="cart-count-badge" style="display: none;">0</span>
+        </a>
+
+        <button class="mobile-nav-toggle" aria-label="Toggle navigation menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-drawer">
+    <ul class="nav-menu">
+      <li><a href="index.html" class="nav-link">Home Dashboard</a></li>
+      <li><a href="menu.html" class="nav-link">Food Menu</a></li>
+      <li><a href="cart.html" class="nav-link active">Shopping Cart</a></li>
+      <li><a href="orders.html" class="nav-link">Active Orders</a></li>
+      <li><a href="history.html" class="nav-link">Order History</a></li>
+      <li><a href="kitchen.html" class="nav-link nav-link-kitchen">Kitchen Operational View</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <main class="site-main">
+    <div class="container">
+
+      <!-- Page Header -->
+      <header class="page-header">
+        <div class="page-title-group">
+          <h1 class="page-title">Your Food Cart</h1>
+          <p class="page-subtitle">Review selected items before generating order token via <strong>OrderManager (Singleton Instance)</strong></p>
+        </div>
+        <div id="cart-header-actions" style="display: none;">
+          <button class="btn btn-ghost btn-sm" id="btn-clear-cart" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>
+            Clear Cart
+          </button>
+        </div>
+      </header>
+
+      <!-- Cart Split Layout -->
+      <div id="cart-content-container">
+        <!-- Rendered by JS -->
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand-wrap">
+          <span class="footer-brand-title">JeevaCan • College Canteen Ordering System</span>
+          <p class="footer-desc">A premium, resilient food ordering architecture demonstrating Singleton, Factory, and Observer software design patterns with zero external backend dependencies.</p>
+        </div>
+        <ul class="footer-links">
+          <li><a href="index.html" class="footer-link">Dashboard</a></li>
+          <li><a href="menu.html" class="footer-link">Menu Catalog</a></li>
+          <li><a href="orders.html" class="footer-link">Live Tracker</a></li>
+          <li><a href="kitchen.html" class="footer-link">Kitchen Terminal</a></li>
+          <li><a href="history.html" class="footer-link">Audit History</a></li>
+        </ul>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 JeevaCan. All rights reserved. Built with HTML5, CSS3 & Vanilla JavaScript.</span>
+        <div>
+          <button class="btn btn-ghost btn-sm btn-reset-data" type="button" style="font-size: 0.75rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 13px; height: 13px; vertical-align: -2px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Reset Demo Data
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    function renderCartPage() {
+      const cart = App.getCart();
+      const container = document.getElementById("cart-content-container");
+      const clearBtnWrap = document.getElementById("cart-header-actions");
+
+      if (cart.length === 0) {
+        clearBtnWrap.style.display = "none";
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+            </div>
+            <h2 class="empty-state-title">Your food cart is empty</h2>
+            <p class="empty-state-desc">You haven't added any delicious items yet. Browse our menu to explore breakfast tiffins, hearty meals, and refreshing drinks.</p>
+            <a href="menu.html" class="btn btn-primary btn-lg">Browse Canteen Menu</a>
+          </div>
+        `;
+        return;
+      }
+
+      clearBtnWrap.style.display = "block";
+      const { subtotal, taxes, total } = App.getCartTotals();
+
+      container.innerHTML = `
+        <div class="layout-split">
+          <!-- Left Column: Cart Items List -->
+          <div>
+            <div class="panel" style="margin-bottom: var(--space-6);">
+              <h2 class="panel-title">
+                <span>Selected Items (${cart.reduce((s, i) => s + i.quantity, 0)})</span>
+                <span style="font-size: 0.85rem; color: var(--text-tertiary); font-weight: normal;">Factory Instantiated Products</span>
+              </h2>
+
+              <div class="cart-items-list">
+                ${cart.map(item => `
+                  <div class="cart-item-card">
+                    <div class="cart-item-info">
+                      <img src="${item.image}" alt="${item.name}" class="cart-item-thumb">
+                      <div class="cart-item-details">
+                        <span class="cart-item-name">${item.name}</span>
+                        <span class="cart-item-cat">${item.category} • Factory: <code>${item.factoryClass}</code></span>
+                        <span class="cart-item-unit-price">${App.formatINR(item.price)} each</span>
+                      </div>
+                    </div>
+
+                    <div class="cart-item-actions">
+                      <div class="qty-counter">
+                        <button class="qty-btn btn-cart-minus" data-id="${item.foodId}" aria-label="Decrease quantity">−</button>
+                        <span class="qty-val">${item.quantity}</span>
+                        <button class="qty-btn btn-cart-plus" data-id="${item.foodId}" aria-label="Increase quantity">+</button>
+                      </div>
+                      <span class="cart-item-subtotal">${App.formatINR(item.price * item.quantity)}</span>
+                      <button class="cart-remove-btn btn-cart-remove" data-id="${item.foodId}" aria-label="Remove item" title="Remove item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>
+
+              <div style="margin-top: var(--space-4); display: flex; justify-content: space-between; align-items: center;">
+                <a href="menu.html" class="btn btn-secondary btn-sm">
+                  + Add More Menu Items
+                </a>
+              </div>
+            </div>
+
+            <!-- Customer Details Form Panel -->
+            <div class="panel">
+              <h2 class="panel-title">Customer & Pickup Details</h2>
+              <form id="checkout-form" style="display: flex; flex-direction: column; gap: var(--space-4);">
+                <div class="form-group">
+                  <label class="form-label" for="customer-name">Full Name & Student Roll No. *</label>
+                  <input type="text" id="customer-name" class="form-input" placeholder="e.g. Rahul Sharma (Roll #21CS042)" required value="Rahul Sharma (Roll #21CS042)">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="customer-phone">Mobile Number (For SMS/Counter Alert)</label>
+                  <input type="tel" id="customer-phone" class="form-input" placeholder="+91 98765 43210" value="+91 98765 43210">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="order-notes">Preparation Notes / Dietary Requests</label>
+                  <textarea id="order-notes" class="form-textarea" placeholder="e.g. Extra spicy, less oil, pack for takeout..."></textarea>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Right Column: Order Summary & Checkout Action -->
+          <div>
+            <div class="panel summary-card">
+              <h2 class="panel-title">Order Cost Summary</h2>
+
+              <div class="summary-rows">
+                <div class="summary-row">
+                  <span>Items Subtotal</span>
+                  <span style="font-weight: 600;">${App.formatINR(subtotal)}</span>
+                </div>
+                <div class="summary-row">
+                  <span>Canteen GST & Tax (5%)</span>
+                  <span>${App.formatINR(taxes)}</span>
+                </div>
+                <div class="summary-row">
+                  <span>Counter Packaging</span>
+                  <span style="color: #16A34A; font-weight: 600;">FREE</span>
+                </div>
+                <div class="summary-row total">
+                  <span>Grand Total</span>
+                  <span class="total-amount">${App.formatINR(total)}</span>
+                </div>
+              </div>
+
+              <div style="background-color: var(--bg-canvas); border-radius: var(--radius-md); padding: var(--space-3); margin-bottom: var(--space-5); border: 1px solid var(--border-subtle); font-size: 0.8rem; color: var(--text-secondary); line-height: 1.45;">
+                <strong><strong>Architecture Event:</strong></strong> Clicking checkout invokes <code>OrderManager.placeOrder()</code> (Singleton), generates a guaranteed unique Order ID, and broadcasts updates to Customer & Kitchen Observers.
+              </div>
+
+              <button class="btn btn-primary btn-lg btn-block" id="btn-submit-order" type="button">
+                Place Order & Generate Token
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Bind +/- and remove buttons
+      container.querySelectorAll(".btn-cart-minus").forEach(btn => {
+        btn.addEventListener("click", () => {
+          App.updateCartQty(btn.dataset.id, -1);
+          renderCartPage();
+        });
+      });
+
+      container.querySelectorAll(".btn-cart-plus").forEach(btn => {
+        btn.addEventListener("click", () => {
+          App.updateCartQty(btn.dataset.id, 1);
+          renderCartPage();
+        });
+      });
+
+      container.querySelectorAll(".btn-cart-remove").forEach(btn => {
+        btn.addEventListener("click", () => {
+          App.removeFromCart(btn.dataset.id);
+          renderCartPage();
+        });
+      });
+
+      // Submit checkout
+      document.getElementById("btn-submit-order").addEventListener("click", () => {
+        const nameInput = document.getElementById("customer-name");
+        const phoneInput = document.getElementById("customer-phone");
+        const notesInput = document.getElementById("order-notes");
+
+        if (!nameInput.value.trim()) {
+          App.showToast("Please enter your name & student roll number.", "error");
+          nameInput.focus();
+          return;
+        }
+
+        const newOrder = App.placeOrder({
+          name: nameInput.value.trim(),
+          phone: phoneInput.value.trim(),
+          notes: notesInput.value.trim()
+        });
+
+        if (newOrder) {
+          setTimeout(() => {
+            window.location.href = "orders.html";
+          }, 600);
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderCartPage();
+
+      document.getElementById("btn-clear-cart")?.addEventListener("click", () => {
+        if (confirm("Are you sure you want to clear all items from your cart?")) {
+          App.clearCart();
+          renderCartPage();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
